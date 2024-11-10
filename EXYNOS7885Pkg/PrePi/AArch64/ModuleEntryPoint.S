@@ -26,8 +26,8 @@ _StackSize:
   .quad FixedPcdGet32(PcdPrePiStackSize)
 
 
-_ModuleEntryPoint:  
-  mov x0, #0
+_ModuleEntryPoint:
+   mov x0, #0
 
   /* Know about the current CPU index */
   mrs x3, mpidr_el1
