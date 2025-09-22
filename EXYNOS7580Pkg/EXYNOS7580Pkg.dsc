@@ -111,8 +111,8 @@
   #
   # ARM General Interrupt Controller
   #
-  gArmTokenSpaceGuid.PcdGicDistributorBase|0x12301000
-  gArmTokenSpaceGuid.PcdGicInterruptInterfaceBase|0x12302000
+  gArmTokenSpaceGuid.PcdGicDistributorBase|0x10c01000
+  gArmTokenSpaceGuid.PcdGicInterruptInterfaceBase|0x10c02000
 
   gArmTokenSpaceGuid.PcdArmArchTimerIntrNum|0x12
   gArmTokenSpaceGuid.PcdArmArchTimerVirtIntrNum|0x13

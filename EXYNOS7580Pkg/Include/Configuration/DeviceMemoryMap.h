@@ -63,17 +63,17 @@ static ARM_MEMORY_REGION_DESCRIPTOR_EX gDeviceMemoryDescriptorEx[] = {
     {"Periphs",           0x00000000, 0x15000000,  AddMem, MEM_RES, UNCACHEABLE,  RtCode,   DEVICE},
 
 //--------------------- DDR --------------------- */
+    {"george floyd",           0x40000000, 0x10000000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK},
+    {"UEFI FD",                0x50000000, 0x00200000, AddMem, SYS_MEM, SYS_MEM_CAP, BsCode, WRITE_BACK},
+    {"CPU Vectors",            0x50200000, 0x00001000, AddMem, SYS_MEM, SYS_MEM_CAP, BsData, WRITE_BACK},
+    {"UEFI Stack",             0x50201000, 0x00040000, AddMem, SYS_MEM, SYS_MEM_CAP, BsCode, WRITE_BACK},
+    {"DXE Heap",               0x50241000, 0x07000000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK},
+    {"Display Reserved",       0x67000000, 0x007E9000, AddMem, MEM_RES, SYS_MEM_CAP, Reserv, WRITE_THROUGH},
 
-    {"HLOS 0",            0x80000000, 0x00C00000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv, WRITE_BACK_XN},
-    {"UEFI Stack",        0x80C00000, 0x00040000, AddMem, SYS_MEM, SYS_MEM_CAP,  BsData, WRITE_BACK},
-    {"CPU Vectors",       0x80C40000, 0x00010000, AddMem, SYS_MEM, SYS_MEM_CAP,  BsCode, WRITE_BACK},
-    {"HLOS 1",            0x80C50000, 0x0F3B0000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK},
-    {"UEFI FD",           0x90000000, 0x00200000, AddMem, SYS_MEM, SYS_MEM_CAP, BsCode, WRITE_BACK},
-    {"HLOS 1.5",          0x90200000, 0x2BA00000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK},
-    /*Memory hole 0xbbc00000 -> 0xc0000000*/
-    {"HLOS 3",            0xc0000000, 0x2C000000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK},
-    {"Display Reserved",  0xec000000, 0x00800000, AddMem, MEM_RES, SYS_MEM_CAP, Reserv, WRITE_THROUGH_XN},
-    {"HLOS 4",            0xEC800000, 0x13800000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK},
+    /*{"UEFI Stack",             0x40000000, 0x00040000, AddMem, SYS_MEM, SYS_MEM_CAP, BsCode, WRITE_BACK},
+    {"CPU Vectors",            0x40040000, 0x00001000, AddMem, SYS_MEM, SYS_MEM_CAP, BsData, WRITE_BACK},
+    {"UEFI FD",                0x40041000, 0x00200000, AddMem, SYS_MEM, SYS_MEM_CAP, BsCode, WRITE_BACK},
+    {"Display Reserved",       0x67000000, 0x007E9000, AddMem, MEM_RES, SYS_MEM_CAP, Reserv, WRITE_THROUGH},*/
 
     /* Terminator for MMU */
     { "Terminator", 0, 0, 0, 0, 0, 0, 0}};

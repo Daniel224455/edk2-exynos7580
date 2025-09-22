@@ -12,16 +12,17 @@
 !include EXYNOS7580Pkg/EXYNOS7580Pkg.dsc
 
 [PcdsFixedAtBuild.common]
-  # System Memory (1.5GB)
-  gArmTokenSpaceGuid.PcdSystemMemoryBase|0x80000000
+  # System Memory (2GB?)
+  gArmTokenSpaceGuid.PcdSystemMemoryBase|0x40000000
   gArmTokenSpaceGuid.PcdSystemMemorySize|0x80000000
-  gEmbeddedTokenSpaceGuid.PcdPrePiStackBase|0x80C00000
+  gEmbeddedTokenSpaceGuid.PcdPrePiStackBase|0x50201000
   gEmbeddedTokenSpaceGuid.PcdPrePiStackSize|0x00040000      # 256K stack
-  gEXYNOS7580PkgTokenSpaceGuid.PcdUefiMemPoolBase|0x80D00000         # DXE Heap base address
-  gEXYNOS7580PkgTokenSpaceGuid.PcdUefiMemPoolSize|0x03300000         # UefiMemorySize, DXE heap size
+  gEXYNOS7580PkgTokenSpaceGuid.PcdUefiMemPoolBase|0x50241000         # DXE Heap base address
+  gEXYNOS7580PkgTokenSpaceGuid.PcdUefiMemPoolSize|0x07000000         # UefiMemorySize, DXE heap size
+
   # Framebuffer (720x1280)
-  gEXYNOS7580PkgTokenSpaceGuid.PcdMipiFrameBufferAddress|0x0ec000000
-  gEXYNOS7580PkgTokenSpaceGuid.PcdMipiFrameBufferWidth|720
-  gEXYNOS7580PkgTokenSpaceGuid.PcdMipiFrameBufferHeight|1520
-  gEXYNOS7580PkgTokenSpaceGuid.PcdMipiFrameBufferVisibleWidth|720
-  gEXYNOS7580PkgTokenSpaceGuid.PcdMipiFrameBufferVisibleHeight|1520
+  gEXYNOS7580PkgTokenSpaceGuid.PcdMipiFrameBufferAddress|0x67000000
+  gEXYNOS7580PkgTokenSpaceGuid.PcdMipiFrameBufferWidth|1080
+  gEXYNOS7580PkgTokenSpaceGuid.PcdMipiFrameBufferHeight|1920
+  gEXYNOS7580PkgTokenSpaceGuid.PcdMipiFrameBufferVisibleWidth|1080
+  gEXYNOS7580PkgTokenSpaceGuid.PcdMipiFrameBufferVisibleHeight|1920

@@ -30,6 +30,16 @@ UINTN Height = FixedPcdGet32(PcdMipiFrameBufferHeight);
 UINTN Bpp = FixedPcdGet32(PcdMipiFrameBufferPixelBpp);
 UINTN FbAddr = FixedPcdGet32(PcdMipiFrameBufferAddress);
 
+void setFBcolor(char b, char g, char r) {
+    char* base = (char*)0x67000000;
+    for (int i = 0; i < 0x007E9000; i += 4) {
+        base[i] = b;      // Blue component
+        base[i + 1] = g;  // Green component 
+        base[i + 2] = r;  // Red component
+        base[i + 3] = 255; // Full opacity
+    }
+}
+
 VOID
 PaintScreen(
   IN  UINTN   BgColor
@@ -76,11 +86,11 @@ PrePiMain (
   FIRMWARE_SEC_PERFORMANCE    Performance;
 
   // Initialize the architecture specific bits
-  ArchInitialize ();
-
+  //ArchInitialize ();
+  setFBcolor(255, 255, 255);
   // Paint screen to BLACK
   PaintScreen(0);
-
+  while (TRUE);
 
   // Initialize the Serial Port
   SerialPortInitialize ();
@@ -165,19 +175,19 @@ CEntryPoint (
 
   // Initialize the platform specific controllers
   ArmPlatformInitialize (MpId);
-
+  
   StartTimeStamp = 0;
-
+  //setFBcolor(255, 255, 255);
   // Data Cache enabled on Primary core when MMU is enabled.
   ArmDisableDataCache ();
   // Invalidate instruction cache
   ArmInvalidateInstructionCache ();
   // Enable Instruction Caches on all cores.
   ArmEnableInstructionCache ();
-
+  
   // Wait the Primary core has defined the address of the Global Variable region (event: ARM_CPU_EVENT_DEFAULT)
   ArmCallWFE ();
-
+  //while (TRUE);
   PrePiMain (UefiMemoryBase, StacksBase, StartTimeStamp);
 
   // DXE Core should always load and never return
