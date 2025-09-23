@@ -99,6 +99,8 @@
   gEmbeddedTokenSpaceGuid.PcdMemoryTypeEfiLoaderCode
   gEmbeddedTokenSpaceGuid.PcdMemoryTypeEfiLoaderData
 
+  gEXYNOS7580PkgTokenSpaceGuid.PcdCpuVectorBaseAddress
+
   gEXYNOS7580PkgTokenSpaceGuid.PcdMipiFrameBufferAddress
   gEXYNOS7580PkgTokenSpaceGuid.PcdMipiFrameBufferWidth
   gEXYNOS7580PkgTokenSpaceGuid.PcdMipiFrameBufferHeight

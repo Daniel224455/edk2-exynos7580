@@ -17,6 +17,7 @@
   gArmTokenSpaceGuid.PcdSystemMemorySize|0x80000000
   gEmbeddedTokenSpaceGuid.PcdPrePiStackBase|0x50201000
   gEmbeddedTokenSpaceGuid.PcdPrePiStackSize|0x00040000      # 256K stack
+  gEXYNOS7580PkgTokenSpaceGuid.PcdCpuVectorBaseAddress|0x50200000
   gEXYNOS7580PkgTokenSpaceGuid.PcdUefiMemPoolBase|0x50241000         # DXE Heap base address
   gEXYNOS7580PkgTokenSpaceGuid.PcdUefiMemPoolSize|0x07000000         # UefiMemorySize, DXE heap size
 

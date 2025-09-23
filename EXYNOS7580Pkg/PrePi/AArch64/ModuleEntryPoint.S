@@ -43,7 +43,7 @@ _ModuleEntryPoint:
   msr sctlr_el1, x0
 
 _SetupExceptionVector:
-  ldr x0, =0x50200000
+  ldr x0, =FixedPcdGet64(PcdCpuVectorBaseAddress)
   bl ArmWriteVBar
 
   mrs     x4, mpidr_el1

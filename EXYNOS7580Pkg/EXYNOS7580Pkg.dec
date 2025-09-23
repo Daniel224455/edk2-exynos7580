@@ -40,6 +40,7 @@
   # Memory allocation
   gEXYNOS7580PkgTokenSpaceGuid.PcdUefiMemPoolBase|0|UINT64|0x00000a106
   gEXYNOS7580PkgTokenSpaceGuid.PcdUefiMemPoolSize|0|UINT32|0x00000a107
+  gEXYNOS7580PkgTokenSpaceGuid.PcdCpuVectorBaseAddress|0|UINT64|0x00000a108
 
   # Simple FrameBuffer
   gEfiMdeModulePkgTokenSpaceGuid.PcdEmuVariableNvModeEnable|TRUE|BOOLEAN|1
