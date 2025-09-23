@@ -4,7 +4,6 @@ set -e
 . build_common.sh
 # not actually GCC5; it's GCC7 on Ubuntu 18.04.
 ./build_bootshim.sh
-rm boot.img boot.tar
 GCC5_AARCH64_PREFIX=aarch64-linux-gnu- build -j$(nproc) -s -n 0 -a AARCH64 -t GCC5 -p EXYNOS7580Pkg/Devices/a5xelte.dsc||exit 1
 cat BootShim/BootShim.bin workspace/Build/EXYNOS7580Pkg/DEBUG_GCC5/FV/EXYNOS7580PKG_UEFI.fd > workspace/payload.bin||exit 1
 

@@ -119,7 +119,8 @@
   gArmTokenSpaceGuid.PcdArmArchTimerVirtIntrNum|30
 
   # GUID of the UI app
-  gEfiMdeModulePkgTokenSpaceGuid.PcdBootManagerMenuFile|{ 0x21, 0xaa, 0x2c, 0x46, 0x14, 0x76, 0x03, 0x45, 0x83, 0x6e, 0x8a, 0xb6, 0xf4, 0x66, 0x23, 0x31 }
+  #gEfiMdeModulePkgTokenSpaceGuid.PcdBootManagerMenuFile|{ 0x21, 0xaa, 0x2c, 0x46, 0x14, 0x76, 0x03, 0x45, 0x83, 0x6e, 0x8a, 0xb6, 0xf4, 0x66, 0x23, 0x31 }  
+  gEfiMdeModulePkgTokenSpaceGuid.PcdBootManagerMenuFile|{ 0xC5, 0x7A, 0xD6, 0xB7, 0x05, 0x15, 0x40, 0xA8, 0x9D, 0x21, 0x55, 0x16, 0x52, 0x85, 0x4E, 0x37 }
 
   gEfiMdePkgTokenSpaceGuid.PcdPlatformBootTimeOut|0
 
@@ -235,6 +236,9 @@
   MdeModulePkg/Universal/Disk/PartitionDxe/PartitionDxe.inf
   MdeModulePkg/Universal/Disk/UnicodeCollation/EnglishDxe/EnglishDxe.inf
   FatPkg/EnhancedFatDxe/Fat.inf
+  EXYNOS7580Pkg/Drivers/BootRamDiskHelperDxe/BootRamDiskHelperDxe.inf
+  MdeModulePkg/Universal/Disk/RamDiskDxe/RamDiskDxe.inf
+  MdeModulePkg/Universal/FvSimpleFileSystemDxe/FvSimpleFileSystemDxe.inf
 
   #
   # ACPI Support
@@ -270,25 +274,25 @@
       NULL|MdeModulePkg/Library/BootMaintenanceManagerUiLib/BootMaintenanceManagerUiLib.inf
       PcdLib|MdePkg/Library/DxePcdLib/DxePcdLib.inf
   }
-  ShellPkg/Application/Shell/Shell.inf {
-    <LibraryClasses>
-      ShellCommandLib|ShellPkg/Library/UefiShellCommandLib/UefiShellCommandLib.inf
-      NULL|ShellPkg/Library/UefiShellLevel2CommandsLib/UefiShellLevel2CommandsLib.inf
-      NULL|ShellPkg/Library/UefiShellLevel1CommandsLib/UefiShellLevel1CommandsLib.inf
-      NULL|ShellPkg/Library/UefiShellLevel3CommandsLib/UefiShellLevel3CommandsLib.inf
-      NULL|ShellPkg/Library/UefiShellDriver1CommandsLib/UefiShellDriver1CommandsLib.inf
-      NULL|ShellPkg/Library/UefiShellDebug1CommandsLib/UefiShellDebug1CommandsLib.inf
-      NULL|ShellPkg/Library/UefiShellInstall1CommandsLib/UefiShellInstall1CommandsLib.inf
-      NULL|ShellPkg/Library/UefiShellNetwork1CommandsLib/UefiShellNetwork1CommandsLib.inf
-      NULL|ShellPkg/Library/UefiShellAcpiViewCommandLib/UefiShellAcpiViewCommandLib.inf
-      HandleParsingLib|ShellPkg/Library/UefiHandleParsingLib/UefiHandleParsingLib.inf
-      PrintLib|MdePkg/Library/BasePrintLib/BasePrintLib.inf
-      BcfgCommandLib|ShellPkg/Library/UefiShellBcfgCommandLib/UefiShellBcfgCommandLib.inf
-    <PcdsFixedAtBuild>
-      gEfiMdePkgTokenSpaceGuid.PcdDebugPropertyMask|0xFF
-      gEfiShellPkgTokenSpaceGuid.PcdShellLibAutoInitialize|FALSE
-      gEfiMdePkgTokenSpaceGuid.PcdUefiLibMaxPrintBufferSize|8000
-  }
+  #ShellPkg/Application/Shell/Shell.inf {
+  #  <LibraryClasses>
+  #    ShellCommandLib|ShellPkg/Library/UefiShellCommandLib/UefiShellCommandLib.inf
+  #    NULL|ShellPkg/Library/UefiShellLevel2CommandsLib/UefiShellLevel2CommandsLib.inf
+  #    NULL|ShellPkg/Library/UefiShellLevel1CommandsLib/UefiShellLevel1CommandsLib.inf
+  #    NULL|ShellPkg/Library/UefiShellLevel3CommandsLib/UefiShellLevel3CommandsLib.inf
+  #    NULL|ShellPkg/Library/UefiShellDriver1CommandsLib/UefiShellDriver1CommandsLib.inf
+  #    NULL|ShellPkg/Library/UefiShellDebug1CommandsLib/UefiShellDebug1CommandsLib.inf
+  #    NULL|ShellPkg/Library/UefiShellInstall1CommandsLib/UefiShellInstall1CommandsLib.inf
+  #    NULL|ShellPkg/Library/UefiShellNetwork1CommandsLib/UefiShellNetwork1CommandsLib.inf
+  #    NULL|ShellPkg/Library/UefiShellAcpiViewCommandLib/UefiShellAcpiViewCommandLib.inf
+  #    HandleParsingLib|ShellPkg/Library/UefiHandleParsingLib/UefiHandleParsingLib.inf
+  #    PrintLib|MdePkg/Library/BasePrintLib/BasePrintLib.inf
+  #    BcfgCommandLib|ShellPkg/Library/UefiShellBcfgCommandLib/UefiShellBcfgCommandLib.inf
+  #  <PcdsFixedAtBuild>
+  #    gEfiMdePkgTokenSpaceGuid.PcdDebugPropertyMask|0xFF
+  #    gEfiShellPkgTokenSpaceGuid.PcdShellLibAutoInitialize|FALSE
+  #    gEfiMdePkgTokenSpaceGuid.PcdUefiLibMaxPrintBufferSize|8000
+  #}
 !ifdef $(INCLUDE_TFTP_COMMAND)
   ShellPkg/DynamicCommand/TftpDynamicCommand/TftpDynamicCommand.inf
 !endif #$(INCLUDE_TFTP_COMMAND)

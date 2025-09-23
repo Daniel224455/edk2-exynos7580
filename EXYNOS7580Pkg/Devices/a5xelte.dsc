@@ -15,10 +15,10 @@
   # System Memory (2GB?)
   gArmTokenSpaceGuid.PcdSystemMemoryBase|0x40000000
   gArmTokenSpaceGuid.PcdSystemMemorySize|0x80000000
-  gEmbeddedTokenSpaceGuid.PcdPrePiStackBase|0x50201000
+  gEmbeddedTokenSpaceGuid.PcdPrePiStackBase|0x50B01000
   gEmbeddedTokenSpaceGuid.PcdPrePiStackSize|0x00040000      # 256K stack
-  gEXYNOS7580PkgTokenSpaceGuid.PcdCpuVectorBaseAddress|0x50200000
-  gEXYNOS7580PkgTokenSpaceGuid.PcdUefiMemPoolBase|0x50241000         # DXE Heap base address
+  gEXYNOS7580PkgTokenSpaceGuid.PcdCpuVectorBaseAddress|0x50B00000
+  gEXYNOS7580PkgTokenSpaceGuid.PcdUefiMemPoolBase|0x50B41000         # DXE Heap base address
   gEXYNOS7580PkgTokenSpaceGuid.PcdUefiMemPoolSize|0x07000000         # UefiMemorySize, DXE heap size
 
   # Framebuffer (720x1280)
