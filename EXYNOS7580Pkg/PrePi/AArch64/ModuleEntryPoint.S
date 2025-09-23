@@ -1,97 +1,142 @@
-//
-//  Copyright (c) 2011 - 2020, Arm Limited. All rights reserved.<BR>
-//
-//  SPDX-License-Identifier: BSD-2-Clause-Patent
-//
-//
-
+#include <Library/PcdLib.h>
 #include <AsmMacroLib.h>
 
-ASM_FUNC(_ModuleEntryPoint)
-  // Do early platform specific actions
-  bl    ASM_PFX(ArmPlatformPeiBootAction)
+.text
+.align 3
 
-  
+.set CTRL_SPAN_BIT, (1 << 23)
 
-_SetSVCMode:
-// Check if we can install the stack at the top of the System Memory or if we need
-// to install the stacks at the bottom of the Firmware Device (case the FD is located
-// at the top of the DRAM)
-_SystemMemoryEndInit:
-  ldr   x1, mSystemMemoryEnd
+GCC_ASM_IMPORT (CEntryPoint)
+GCC_ASM_IMPORT (SecondaryCEntryPoint)
 
-_SetupStackPosition:
-  // r1 = SystemMemoryTop
+GCC_ASM_IMPORT (ArmEnableInstructionCache)
+GCC_ASM_IMPORT (ArmEnableDataCache)
+GCC_ASM_IMPORT (ArmInvalidateTlb)
 
-  // Calculate Top of the Firmware Device
-  MOV64 (x2, FixedPcdGet64(PcdFdBaseAddress))
-  MOV32 (x3, FixedPcdGet32(PcdFdSize) - 1)
-  sub   x3, x3, #1
-  add   x3, x3, x2      // x3 = FdTop = PcdFdBaseAddress + PcdFdSize
+GCC_ASM_EXPORT (_ModuleEntryPoint)
+GCC_ASM_EXPORT (SecondaryCpuEntry)
 
-  // UEFI Memory Size (stacks are allocated in this region)
-  MOV32 (x4, FixedPcdGet32(PcdSystemMemoryUefiRegionSize))
+.global _StackBase
+.global _StackSize
 
-  //
-  // Reserve the memory for the UEFI region (contain stacks on its top)
-  //
+_StackBase:
+  .quad FixedPcdGet32(PcdPrePiStackBase)
 
-  // Calculate how much space there is between the top of the Firmware and the Top of the System Memory
-  subs  x0, x1, x3   // x0 = SystemMemoryTop - FdTop
-  b.mi  _SetupStack  // Jump if negative (FdTop > SystemMemoryTop). Case when the PrePi is in XIP memory outside of the DRAM
-  cmp   x0, x4
-  b.ge  _SetupStack
+_StackSize:
+  .quad FixedPcdGet32(PcdPrePiStackSize)
 
-  // Case the top of stacks is the FdBaseAddress
-  mov   x1, x2
+_ModuleEntryPoint:
+  /* First ensure all interrupts are disabled */
+  bl ASM_PFX(ArmDisableInterrupts)
 
-_SetupStack:
-  // x1 contains the top of the stack (and the UEFI Memory)
+  /* Ensure that the MMU and caches are off */
+  bl ASM_PFX(ArmDisableCachesAndMmu)
 
-  // Because the 'push' instruction is equivalent to 'stmdb' (decrement before), we need to increment
-  // one to the top of the stack. We check if incrementing one does not overflow (case of DRAM at the
-  // top of the memory space)
-  adds  x11, x1, #1
-  b.cs  _SetupOverflowStack
+  /* Invalide I-Cache */
+  bl ASM_PFX(ArmInvalidateInstructionCache)
 
-_SetupAlignedStack:
-  mov   x1, x11
-  b     _GetBaseUefiMemory
+  /* Invalidate TLB */
+  bl ASM_PFX(ArmInvalidateTlb)
 
-_SetupOverflowStack:
-  // Case memory at the top of the address space. Ensure the top of the stack is EFI_PAGE_SIZE
-  // aligned (4KB)
-  and   x1, x1, ~EFI_PAGE_MASK
+  mrs x0, sctlr_el1
+  orr x0, x0, #CTRL_SPAN_BIT
+  msr sctlr_el1, x0
 
-_GetBaseUefiMemory:
-  // Calculate the Base of the UEFI Memory
-  sub   x11, x1, x4
+_SetupExceptionVector:
+  ldr x0, =0x50200000
+  bl ArmWriteVBar
 
-_GetStackBase:
-   // r1 = The top of the stack
-  mov   sp, x1
-  // Stack for the primary core = PrimaryCoreStack
-  MOV32 (x2, FixedPcdGet32(PcdCPUCorePrimaryStackSize))
-  sub   x12, x1, x2
+  mrs     x4, mpidr_el1
+  and     x4, x4, #0xFFFF
+  lsr     x4, x4, #8
+  cbnz    x4, SecondaryCpuEntry
 
-  // Get ID of this CPU in multi-core system
-  bl    ASM_PFX(ArmReadMpidr)
+  ldr x1, dead
+  add x2, x0, #0x800
+  mov x3, x0
 
-  mov   x1, x11
-  mov   x2, x12
+_FillVectors:
+  stp     x1, x1, [x3], #16 /* Fill every 16 byte */
+  cmp     x3, x2
+  b.lt    _FillVectors
 
-  // Move sec startup address into a data register
-  // Ensure we're jumping to FV version of the code (not boot remapped alias)
-  ldr   x4, =ASM_PFX(CEntryPoint)
+_DonNotTrap_VFP_SIMD:
+  mrs x0, CPACR_EL1
+  /* Bit 20 and 21 */
+  orr x0, x0, #0x300000
+  msr CPACR_EL1, x0
+  isb sy
 
-  // Set the frame pointer to NULL so any backtraces terminate here
-  mov   x29, xzr
+_SetupPrimaryCoreStack:
+  ldr x0, _StackBase     /* Stack base arg0 */
+  ldr x1, _StackSize     /* Stack size arg1 */
 
-  // Jump to PrePiCore C code
-  //    x0 = MpId
-  //    x1 = UefiMemoryBase
-  //    x2 = StacksBase
-  blr   x4
+  /* Zero Init stack */
+  add x2, x0, x1         /* End of Stack */
+  mov x3, x0             /* Stack Base */
 
-_NeverReturn:
-  b _NeverReturn
+  mov v4.d[0], xzr
+  mov v4.d[1], xzr
+  mov v5.16b, v4.16b
+  mov v6.16b, v4.16b
+  mov v7.16b, v4.16b
+
+_ClearStack:
+  /* Assumes StackBase is 128-bit aligned, StackSize is a multiple of 64B */
+  st4   {v4.16b, v5.16b, v6.16b, v7.16b}, [x3], #64  /* Fill every 64 bytes */
+  cmp   x3, x2                                   /* Compare Size */
+  b.lt  _ClearStack
+
+  add sp, x2, xzr                                /* Initalize SP */
+
+_EnableCache:
+  bl ArmDisableDataCache
+  bl ASM_PFX(ArmEnableInstructionCache)
+  bl ASM_PFX(ArmEnableDataCache)
+
+_PrepareArguments:
+  /* x0 = _StackBase and x1 = _StackSize */
+  ldr x0, _StackBase     /* Stack base arg0 */
+  ldr x1, _StackSize     /* Stack size arg1 */
+
+  bl CEntryPoint
+
+.align 3
+dead:
+  b dead                      /* We should never get here */
+
+SecondaryCpuEntry:
+  /* Keep the incoming index */
+  mov x19, x4
+
+  mov x5, #0x8
+  sub x4, x5, x4
+
+  ubfiz x2, x4, #15, #8
+
+_SetupSecondaryCoreStack:
+  ldr x3, _StackBase     /* Stack base arg0 */
+
+  add x2, x3, x2
+  sub x3, x2, #0x8000    /* Stack size arg1 */
+
+  mov x4, xzr
+  mov x5, xzr
+
+_ClearStackSecondary:
+  /* Assumes StackBase is 128-bit aligned, StackSize is a multiple of 16B */
+  stp     x4, x5, [x3], #16
+  cmp     x3, x2                                   /* Compare Size */
+  b.lt    _ClearStackSecondary
+
+  add sp, x2, xzr                                  /* Initalize SP */
+
+  bl ArmDisableDataCache
+
+  /* Enter MpPark spin */
+  mov x0, x19
+  bl CEntryPoint
+
+secondarydead:
+  wfe
+  b secondarydead                      /* We should never get here */
