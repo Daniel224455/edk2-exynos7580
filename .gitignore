@@ -3,3 +3,5 @@ BootShim/BootShim.elf
 device_specific/aik/ramdisk/
 device_specific/aik/split_img/
 12
+boot.img 
+boot.tar
