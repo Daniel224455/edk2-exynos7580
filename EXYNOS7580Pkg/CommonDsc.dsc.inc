@@ -213,7 +213,7 @@
 !endif
 
 [LibraryClasses.AARCH64]
-  ArmGenericTimerCounterLib|ArmPkg/Library/ArmGenericTimerPhyCounterLib/ArmGenericTimerPhyCounterLib.inf
+  ArmGenericTimerCounterLib|EXYNOS7580Pkg/Library/ArmGenericTimerPhyCounterLib/ArmGenericTimerPhyCounterLib.inf
 
 [BuildOptions]
   RVCT:RELEASE_*_*_CC_FLAGS  = -DMDEPKG_NDEBUG

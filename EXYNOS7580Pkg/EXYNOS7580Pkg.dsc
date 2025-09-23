@@ -113,7 +113,8 @@
   #
   gArmTokenSpaceGuid.PcdGicDistributorBase|0x10c01000
   gArmTokenSpaceGuid.PcdGicInterruptInterfaceBase|0x10c02000
-
+  
+  gEXYNOS7580PkgTokenSpaceGuid.PcdTimerFreqOverwrite|26000000
   gArmTokenSpaceGuid.PcdArmArchTimerIntrNum|0x12
   gArmTokenSpaceGuid.PcdArmArchTimerVirtIntrNum|0x13
 
