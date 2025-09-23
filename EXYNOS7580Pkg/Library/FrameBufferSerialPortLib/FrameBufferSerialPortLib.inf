@@ -15,12 +15,14 @@
 
 [LibraryClasses]
   ArmLib
+  BaseMemoryLib
   PcdLib
   IoLib
   HobLib
   CompilerIntrinsicsLib
   CacheMaintenanceLib
-
+  TimerLib
+  
 [Pcd]
   gEXYNOS7580PkgTokenSpaceGuid.PcdMipiFrameBufferAddress
   gEXYNOS7580PkgTokenSpaceGuid.PcdMipiFrameBufferWidth
