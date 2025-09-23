@@ -4,13 +4,13 @@ Attempt to create a minimal EDK2 for Exynos 7580 devices
 Boots to UEFI Shell.
 
 ### Building
-Tested on Ubuntu 20.04.
+Tested on Ubuntu 20.04, but should also work on the latest Ubuntu version.
 
 First, clone EDK2.
 
 ```
 cd ..
-git clone https://github.com/tianocore/edk2 --recursive -b edk2-stable202502
+git clone https://github.com/tianocore/edk2 --recursive -b edk2-stable202508
 git clone https://github.com/tianocore/edk2-platforms.git
 ```
 
@@ -32,10 +32,7 @@ First run ./firstrun.sh
 
 Then, ./build.sh.
 
-This should make a boot.tar image to be flashed in ODIN, you may need to adjust.
-
-
-
+Under the folder `workspace`, you will find a boot.tar file. This file can be flashed to your device's BOOT partition.
 
 # Credits
 

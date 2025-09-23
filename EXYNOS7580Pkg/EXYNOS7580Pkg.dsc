@@ -104,8 +104,8 @@
 
   gEfiMdeModulePkgTokenSpaceGuid.PcdFirmwareVersionString|L"Alpha"
 
-  # We only boot one processor here!
-  gArmPlatformTokenSpaceGuid.PcdCoreCount|1
+  # We boot all cores here!
+  gArmPlatformTokenSpaceGuid.PcdCoreCount|8
   gArmPlatformTokenSpaceGuid.PcdClusterCount|1
 
   #
