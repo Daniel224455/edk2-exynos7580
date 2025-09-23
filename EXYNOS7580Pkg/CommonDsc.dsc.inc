@@ -64,6 +64,10 @@
 
   ResetSystemLib|ArmPkg/Library/ArmPsciResetSystemLib/ArmPsciResetSystemLib.inf
 
+  # Keypad/Buttons
+  KeypadDeviceHelperLib|EXYNOS7580Pkg/Library/KeypadDeviceHelperLib/KeypadDeviceHelperLib.inf
+  KeypadDeviceImplLib|EXYNOS7580Pkg/Library/KeypadDeviceImplLib/KeypadDeviceImplLib.inf
+
   # ARM PL011 UART Driver
   PL011UartClockLib|ArmPlatformPkg/Library/PL011UartClockLib/PL011UartClockLib.inf
   PL011UartLib|ArmPlatformPkg/Library/PL011UartLib/PL011UartLib.inf
@@ -268,9 +272,9 @@
   # ASSERT_BREAKPOINT_ENABLED  0x10
   # ASSERT_DEADLOOP_ENABLED    0x20
 !if $(TARGET) == RELEASE
-  gEfiMdePkgTokenSpaceGuid.PcdDebugPropertyMask|0x0e
+  gEfiMdePkgTokenSpaceGuid.PcdDebugPropertyMask|0x00
 !else
-  gEfiMdePkgTokenSpaceGuid.PcdDebugPropertyMask|0x0f
+  gEfiMdePkgTokenSpaceGuid.PcdDebugPropertyMask|0x0e
 !endif
 
   #  DEBUG_INIT      0x00000001  // Initialization
@@ -293,7 +297,7 @@
 !if $(TARGET) != RELEASE
   gEfiMdePkgTokenSpaceGuid.PcdDebugPrintErrorLevel|0x80000040
 !else
-  gEfiMdePkgTokenSpaceGuid.PcdDebugPrintErrorLevel|0x80000000
+  gEfiMdePkgTokenSpaceGuid.PcdDebugPrintErrorLevel|0x00000000
 !endif
   gEfiMdePkgTokenSpaceGuid.PcdReportStatusCodePropertyMask|0x06
 

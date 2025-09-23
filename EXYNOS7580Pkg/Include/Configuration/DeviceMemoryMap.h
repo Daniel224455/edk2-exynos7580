@@ -60,8 +60,8 @@ static ARM_MEMORY_REGION_DESCRIPTOR_EX gDeviceMemoryDescriptorEx[] = {
 */
 
 //--------------------- Register ---------------------
-    {"Periphs",           0x03000000, 0x14860000,  AddMem, MEM_RES, UNCACHEABLE,  RtCode,   DEVICE},
-
+    {"Periphs",                0x00000000, 0x15000000, AddMem, MEM_RES, UNCACHEABLE,  RtCode,   DEVICE},
+    {"Pinctrl",                0x139b0000, 0x00001000, AddDev, MMAP_IO, UNCACHEABLE, MmIO,   DEVICE},
 //--------------------- DDR --------------------- */
     {"RAM Partition",          0x40000000, 0x10000000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK},
     {"UEFI FD",                0x50000000, 0x00200000, AddMem, SYS_MEM, SYS_MEM_CAP, BsCode, WRITE_BACK},

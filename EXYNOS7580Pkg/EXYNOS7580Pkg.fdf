@@ -139,6 +139,8 @@ READ_LOCK_STATUS   = TRUE
   INF EXYNOS7580Pkg/Drivers/EXYNOS7580PkgDxe/EXYNOS7580PkgDxe.inf
   INF EXYNOS7580Pkg/Drivers/SimpleFbDxe/SimpleFbDxe.inf
   INF EXYNOS7580Pkg/Drivers/LogoDxe/LogoDxe.inf
+  INF EXYNOS7580Pkg/Drivers/GenericKeypadDeviceDxe/GenericKeypadDeviceDxe.inf
+  INF EXYNOS7580Pkg/Drivers/KeypadDxe/KeypadDxe.inf
 
   #
   # USB Host Support
@@ -189,10 +191,10 @@ READ_LOCK_STATUS   = TRUE
   #
   # UEFI applications
   #
-  INF ShellPkg/Application/Shell/Shell.inf
-!ifdef $(INCLUDE_TFTP_COMMAND)
-  INF ShellPkg/DynamicCommand/TftpDynamicCommand/TftpDynamicCommand.inf
-!endif #$(INCLUDE_TFTP_COMMAND)
+#  INF ShellPkg/Application/Shell/Shell.inf
+#!ifdef $(INCLUDE_TFTP_COMMAND)
+#  INF ShellPkg/DynamicCommand/TftpDynamicCommand/TftpDynamicCommand.inf
+#!endif #$(INCLUDE_TFTP_COMMAND)
 
   #
   # Bds
