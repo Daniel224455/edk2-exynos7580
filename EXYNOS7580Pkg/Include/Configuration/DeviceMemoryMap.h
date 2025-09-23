@@ -60,7 +60,9 @@ static ARM_MEMORY_REGION_DESCRIPTOR_EX gDeviceMemoryDescriptorEx[] = {
 */
 
 //--------------------- Register ---------------------
-    {"Periphs",           0x00000000, 0x15000000,  AddMem, MEM_RES, UNCACHEABLE,  RtCode,   DEVICE},
+    {"Periphs",           0x03000000, 0x14860000,  AddMem, MEM_RES, UNCACHEABLE,  RtCode,   DEVICE},
+    /*{"fentanyl",          0xbee00000, 0x01200000,  AddMem, MEM_RES, UNCACHEABLE,  RtCode,   DEVICE},
+    {"naumovlink",        0xb0000000, 0x07800000,  AddMem, MEM_RES, UNCACHEABLE,  RtCode,   DEVICE},*/
 
 //--------------------- DDR --------------------- */
     {"george floyd",           0x40000000, 0x10000000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK},
@@ -68,7 +70,9 @@ static ARM_MEMORY_REGION_DESCRIPTOR_EX gDeviceMemoryDescriptorEx[] = {
     {"CPU Vectors",            0x50200000, 0x00001000, AddMem, SYS_MEM, SYS_MEM_CAP, BsData, WRITE_BACK},
     {"UEFI Stack",             0x50201000, 0x00040000, AddMem, SYS_MEM, SYS_MEM_CAP, BsCode, WRITE_BACK},
     {"DXE Heap",               0x50241000, 0x07000000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK},
+    {"RAM Partition",          0x57241000, 0x0FDBF000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK},
     {"Display Reserved",       0x67000000, 0x007E9000, AddMem, MEM_RES, SYS_MEM_CAP, Reserv, WRITE_THROUGH},
+    //{"RAM Partition",          0x677E9000, 0x18817000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK}, // are you happy now???
 
     /*{"UEFI Stack",             0x40000000, 0x00040000, AddMem, SYS_MEM, SYS_MEM_CAP, BsCode, WRITE_BACK},
     {"CPU Vectors",            0x40040000, 0x00001000, AddMem, SYS_MEM, SYS_MEM_CAP, BsData, WRITE_BACK},
@@ -76,6 +80,6 @@ static ARM_MEMORY_REGION_DESCRIPTOR_EX gDeviceMemoryDescriptorEx[] = {
     {"Display Reserved",       0x67000000, 0x007E9000, AddMem, MEM_RES, SYS_MEM_CAP, Reserv, WRITE_THROUGH},*/
 
     /* Terminator for MMU */
-    { "Terminator", 0, 0, 0, 0, 0, 0, 0}};
+    {"Terminator", 0, 0, 0, 0, 0, 0, 0}};
 
 #endif

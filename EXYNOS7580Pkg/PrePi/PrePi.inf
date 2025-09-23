@@ -106,6 +106,12 @@
   gEXYNOS7580PkgTokenSpaceGuid.PcdMipiFrameBufferHeight
   gEXYNOS7580PkgTokenSpaceGuid.PcdMipiFrameBufferPixelBpp
 
+  gEmbeddedTokenSpaceGuid.PcdPrePiStackBase
+  gEmbeddedTokenSpaceGuid.PcdPrePiStackSize
+  gEXYNOS7580PkgTokenSpaceGuid.PcdUefiMemPoolBase
+  gEXYNOS7580PkgTokenSpaceGuid.PcdUefiMemPoolSize
+
+
 [Pcd]
   gArmTokenSpaceGuid.PcdSystemMemoryBase
   gArmTokenSpaceGuid.PcdSystemMemorySize

@@ -105,17 +105,22 @@ PrePiMain (
   InitializeDebugAgent (DEBUG_AGENT_INIT_POSTMEM_SEC, NULL, NULL);
   SaveAndSetDebugTimerInterrupt (TRUE);
 
+  UefiMemoryBase = FixedPcdGet32(PcdUefiMemPoolBase);
+  UINTN UefiMemorySize = FixedPcdGet32(PcdUefiMemPoolSize);
+  StacksSize     = FixedPcdGet32(PcdPrePiStackSize);
+  StacksBase     = UefiMemoryBase + UefiMemorySize - StacksSize;
+
   // Declare the PI/UEFI memory region
   HobList = HobConstructor (
               (VOID *)UefiMemoryBase,
-              FixedPcdGet32 (PcdSystemMemoryUefiRegionSize),
+              UefiMemorySize,
               (VOID *)UefiMemoryBase,
               (VOID *)StacksBase // The top of the UEFI Memory is reserved for the stacks
               );
   PrePeiSetHobList (HobList);
 
   // Initialize MMU and Memory HOBs (Resource Descriptor HOBs)
-  Status = MemoryPeim (UefiMemoryBase, FixedPcdGet32 (PcdSystemMemoryUefiRegionSize));
+  Status = MemoryPeim (UefiMemoryBase, UefiMemorySize);
   ASSERT_EFI_ERROR (Status);
 
   // Create the Stacks HOB
